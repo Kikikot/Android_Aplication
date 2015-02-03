@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="genders">
+        <item>@string/gender_neutral</item>
+        <item>@string/gender_male</item>
+        <item>@string/gender_female</item>
+    </string-array>
+
+    <string-array name="items">
+        <item>@string/menu_item_settings</item>
+        <item>@string/menu_item_scores</item>
+        <item>@string/menu_item_help</item>
+        <item>@string/menu_item_play</item>
+        <item>@string/menu_item_exit</item>
+    </string-array>
+
+</resources>

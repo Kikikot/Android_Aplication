@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This is a mock question XML chunk
+-->
+<questions>
+    <question
+        number="1"
+        text="01 - Have you ever been on an African safari?"
+        imageUrl="http://i.imgur.com/0xdw6wn.jpg" />
+    <question
+        number="2"
+        text="02 - Have you ever climbed a mountain?"
+        imageUrl="http://i.imgur.com/yVAARPG.jpg" />
+    <question
+        number="3"
+        text="03 - Have you ever milked a cow?"
+        imageUrl="http://i.imgur.com/0odBthS.jpg" />
+    <question
+        number="4"
+        text="04 - Have you ever been to China?"
+        imageUrl="http://i.imgur.com/0xdw6wn.jpg" />
+    <question
+        number="5"
+        text="05 - Have you ever been to a Hawaiian luau?"
+        imageUrl="http://i.imgur.com/yVAARPG.jpg" />
+    <question
+        number="6"
+        text="06 - Have you ever been to London, England?"
+        imageUrl="http://i.imgur.com/0odBthS.jpg" />
+    <question
+        number="7"
+        text="07 - Have you ever eaten a bug?"
+        imageUrl="http://i.imgur.com/0xdw6wn.jpg" />
+    <question
+        number="8"
+        text="08 - Have you ever been to Death Valley?"
+        imageUrl="http://i.imgur.com/yVAARPG.jpg" />
+    <question
+        number="9"
+        text="09 - Have you ever gone fishing?"
+        imageUrl="http://i.imgur.com/0odBthS.jpg" />
+    <question
+        number="10"
+        text="10 - Have you ever crossed the Golden Gate Bridge?"
+        imageUrl="http://i.imgur.com/0xdw6wn.jpg" />
+    <question
+        number="11"
+        text="11 - Have you ever been to a haunted house?"
+        imageUrl="http://i.imgur.com/yVAARPG.jpg" />
+    <question
+        number="12"
+        text="12 - Have you ever seen the Grand Canyon?"
+        imageUrl="http://i.imgur.com/0odBthS.jpg" />
+    <question
+        number="13"
+        text="13 - Have you been in a hot air balloon?"
+        imageUrl="http://i.imgur.com/0xdw6wn.jpg" />
+    <question
+        number="14"
+        text="14 - Have you ever eaten a hot chili pepper?"
+        imageUrl="http://i.imgur.com/yVAARPG.jpg" />
+    <question
+        number="15"
+        text="15 - Have you ever lept before you looked?"
+        imageUrl="http://i.imgur.com/0odBthS.jpg" />
+</questions><!-- From: file:/C:/Users/Enrique/AndroidStudioProjects/Lesson11/app/src/main/res/xml/samplequestions.xml -->

@@ -1,0 +1,188 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}"
+    android:padding="20dp" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" >
+
+        <ImageView
+            android:id="@+id/TitleImageLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/puzle1t" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/MenuTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/TitleImageRight"
+            android:layout_toRightOf="@+id/TitleImageLeft"
+            android:gravity="center"
+            android:text="@string/settings"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/screen_title_size" >
+        </TextView>
+
+        <ImageView
+            android:id="@+id/TitleImageRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/puzle2t" >
+        </ImageView>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:isScrollContainer="true"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lNick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_nick"
+                android:background="@color/bkc"
+                android:layout_marginTop="@dimen/settings_labels_margin"/>
+
+            <EditText
+                android:id="@+id/EditText_Nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="@string/settings_nick"
+                android:ems="10"
+                android:layout_below="@+id/lNick"
+                android:maxLength="20" />
+
+            <TextView
+                android:id="@+id/lMail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_mail"
+                android:background="@color/bkc"
+                android:layout_below="@+id/EditText_Nickname"
+                android:layout_marginTop="@dimen/settings_labels_margin"/>
+
+            <EditText
+                android:id="@+id/EditText_Email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:text="@string/settings_mail"
+                android:ems="10"
+                android:layout_below="@+id/lMail" />
+
+            <TextView
+                android:id="@+id/lPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_pass"
+                android:background="@color/bkc"
+                android:layout_below="@+id/EditText_Email"
+                android:layout_marginTop="@dimen/settings_labels_margin"/>
+            
+            <LinearLayout
+                android:id="@+id/llPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/lPass"
+                android:gravity="center_horizontal">
+                <Button
+                    android:id="@+id/Button_Password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_pass"
+                    android:onClick="onSetPasswordButtonClick"/>
+                <TextView
+                    android:id="@+id/textPass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bkc"
+                    android:text="@string/settings_pass_not_set"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lBirth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_birth"
+                android:background="@color/bkc"
+                android:layout_below="@+id/llPass"
+                android:layout_marginTop="@dimen/settings_labels_margin"/>
+
+            <LinearLayout
+                android:id="@+id/llBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/lBirth"
+                android:gravity="center_horizontal">
+                <Button
+                    android:id="@+id/Button_DOB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_birth"
+                    android:onClick="onPickDateButtonClick"/>
+                <TextView
+                    android:id="@+id/textBirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bkc"
+                    android:text=""/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_gender"
+                android:background="@color/bkc"
+                android:layout_below="@+id/llBirth"
+                android:layout_marginTop="@dimen/settings_labels_margin"/>
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lGender"
+                android:entries="@array/genders" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinner"
+                android:layout_marginTop="@dimen/settings_labels_margin"
+                android:gravity="center_horizontal" >
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear"
+                    android:onClick="clear" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

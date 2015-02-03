@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context="${relativePackage}.${activityClass}" >
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="100"
+        android:layout_above="@+id/Button_Yes" >
+
+        <ImageSwitcher
+            android:id="@+id/ImageSwitcher_QuestionImage"
+            android:layout_width="@dimen/game_image_size"
+            android:layout_height="@dimen/game_image_size"
+            android:clipChildren="false"
+            android:inAnimation="@anim/abc_fade_in"
+            android:outAnimation="@anim/abc_fade_out"
+            android:layout_weight="75" ></ImageSwitcher>
+
+        <TextSwitcher
+            android:id="@+id/TextSwitcher_QuestionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inAnimation="@anim/abc_fade_in"
+            android:outAnimation="@anim/abc_fade_out"
+            android:layout_weight="25" ></TextSwitcher>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/Button_Yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Yes"
+        android:onClick="onYesButton"
+        android:textSize="@dimen/game_button_size"/>
+
+    <Button
+        android:id="@+id/Button_No"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="No"
+        android:onClick="onNoButton"
+        android:textSize="@dimen/game_button_size"/>
+
+</RelativeLayout>

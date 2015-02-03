@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/tLastConnection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/title_color" >
+    </TextView>
+        
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tLastConnection"
+        android:layout_centerHorizontal="true" >
+
+        <ImageView
+            android:id="@+id/TitleImageLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/puzle1t" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/MenuTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/TitleImageRight"
+            android:layout_toRightOf="@+id/TitleImageLeft"
+            android:gravity="center"
+            android:text="@string/menu"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/screen_title_size" >
+        </TextView>
+
+        <ImageView
+            android:id="@+id/TitleImageRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/puzle2t" >
+        </ImageView>
+    </RelativeLayout>
+    
+    <ImageView
+        android:id="@+id/BottomImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/manot" />
+
+    <ListView
+        android:id="@+id/OptionsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:divider="@drawable/dividert"
+        android:listSelector="@drawable/selectort"
+        android:orientation="vertical" >
+    </ListView>
+
+</RelativeLayout>
