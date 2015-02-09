@@ -2,19 +2,28 @@ package com.androidstudy.lesson11;
 
 import java.util.Date;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class QuizMenuActivity extends QuizActivity {
+
+    static final int RESET_DIALOG = 0;
+    private SharedPreferences mGameSettings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +68,11 @@ public class QuizMenuActivity extends QuizActivity {
 				} else if (is(strText, R.string.menu_item_scores)){
 					// Launch the Scores Activity
 					bItemPressed(QuizScoresActivity.class);
-				}else if (is(strText, R.string.menu_item_exit)){
-					// Launch the Scores Activity
+				} else if (is(strText, R.string.menu_item_reset_game)){
+                    // Launch the Reset score Dialog
+                    showDialog(RESET_DIALOG);
+                } else if (is(strText, R.string.menu_item_exit)){
+					// Finish the aplication
 					bExitPressed();
 				}
 			}
@@ -73,6 +85,38 @@ public class QuizMenuActivity extends QuizActivity {
 			}
 		});
 	}
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case RESET_DIALOG:
+                mGameSettings = getSharedPreferences(GAME_PREFERENCES, Context.MODE_PRIVATE);
+                int score = mGameSettings.getInt(GAME_PREFERENCES_SCORE, 0);
+                int questionNumber = mGameSettings.getInt(GAME_PREFERENCES_CURRENT_QUESTION, 1);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("You are at question "+questionNumber+"\n" +
+                        "and your score is "+score+"\nDo you really want to restart them?");
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = mGameSettings.edit();
+                        editor.putInt(GAME_PREFERENCES_CURRENT_QUESTION, 1);
+                        editor.putInt(GAME_PREFERENCES_SCORE, 0);
+                        editor.commit();
+                        Toast.makeText(QuizMenuActivity.this, "Data have been reset", Toast.LENGTH_LONG).show();
+                        QuizMenuActivity.this.removeDialog(RESET_DIALOG);
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                QuizMenuActivity.this.removeDialog(RESET_DIALOG);
+                            }
+                        });
+                AlertDialog resetDialog = builder.create();
+                return resetDialog;
+        }
+        return null;
+    }
 	
 	public void bExitPressed(){
 		finish();

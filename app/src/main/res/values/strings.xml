@@ -22,7 +22,8 @@
 	<string name="menu_item_scores">View Scores</string>
 	<string name="menu_item_help">Help</string>
 	<string name="menu_item_play">Play Game</string>
-	<string name="menu_item_exit">EXIT</string>
+	<string name="menu_item_reset_game">Reset Game</string>
+    <string name="menu_item_exit">EXIT</string>
 
     <string name="all_scores">"All Scores"</string>
     <string name="friends_scores">"Scores of Friends"</string>

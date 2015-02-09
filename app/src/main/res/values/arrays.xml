@@ -11,6 +11,7 @@
         <item>@string/menu_item_scores</item>
         <item>@string/menu_item_help</item>
         <item>@string/menu_item_play</item>
+        <item>@string/menu_item_reset_game</item>
         <item>@string/menu_item_exit</item>
     </string-array>
 

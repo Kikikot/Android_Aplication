@@ -3,7 +3,6 @@ package com.androidstudy.lesson11;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.XmlResourceParser;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,7 +26,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Hashtable;
+import java.util.ArrayList;
 
 public class QuizGameActivity extends QuizActivity {
 
@@ -38,7 +37,11 @@ public class QuizGameActivity extends QuizActivity {
 
     private SharedPreferences mGameSettings;
 
-    private Hashtable<Integer, Question> mQuestions;
+    //private Hashtable<Integer, Question> mQuestions;
+    private ArrayList<Question> questionsList;
+
+    private int score;
+    private TextView tScore;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,12 @@ public class QuizGameActivity extends QuizActivity {
 
         mGameSettings = getSharedPreferences(GAME_PREFERENCES, Context.MODE_PRIVATE);
 
-        mQuestions = new Hashtable<Integer, Question>(QUESTION_BATCH_SIZE);
+        score = mGameSettings.getInt(GAME_PREFERENCES_SCORE, 0);
+        tScore = (TextView) this.findViewById(R.id.text_score);
+        tScore.setText(score+"");
+
+        //mQuestions = new Hashtable<Integer, Question>(QUESTION_BATCH_SIZE);
+        questionsList = new ArrayList<Question>();
 
         int startingQuestionNumber = mGameSettings.getInt(GAME_PREFERENCES_CURRENT_QUESTION, 1);
 
@@ -72,20 +80,25 @@ public class QuizGameActivity extends QuizActivity {
         }
 
         // If the question was loaded properly, display it
-        if (mQuestions.containsKey(startingQuestionNumber)) {
-
-            Log.i(DEBUG_TAG, "Lo contiene de primeras");
+        //if (mQuestions.containsKey(startingQuestionNumber)) {
+        if (isQuestionFor(startingQuestionNumber)) {
             // Set the text of the textswitcher
             mQuestionText.setCurrentText(getQuestionText(startingQuestionNumber));
             // Set the image of the imageswitcher
             Drawable image = getQuestionImageDrawable(startingQuestionNumber);
             mQuestionImage.setImageDrawable(image);
         } else {
-            Log.i(DEBUG_TAG, "No lo contiene");
             // Tell the user we don't have any new questions at this time
             handleNoQuestions();
         }
 	}
+
+    private boolean isQuestionFor(int startingQuestionNumber) {
+        for (int i=0; i<questionsList.size(); i++){
+            if (questionsList.get(i).getNumber()==startingQuestionNumber) return true;
+        }
+        return false;
+    }
 
     private void handleNoQuestions() {
 
@@ -109,17 +122,19 @@ public class QuizGameActivity extends QuizActivity {
     }
 
     private void handleAnswerAndShowNextQuestion(boolean bAnswer) {
-        int curScore = mGameSettings.getInt(GAME_PREFERENCES_SCORE, 0);
         int nextQuestionNumber =  mGameSettings.getInt(GAME_PREFERENCES_CURRENT_QUESTION, 1) + 1;
 
         SharedPreferences.Editor editor = mGameSettings.edit();
         editor.putInt(GAME_PREFERENCES_CURRENT_QUESTION, nextQuestionNumber);
         if (bAnswer) {
-            editor.putInt(GAME_PREFERENCES_SCORE, curScore + 1);
+            score++;
+            editor.putInt(GAME_PREFERENCES_SCORE, score);
+            tScore.setText(score + "");
         }
         editor.commit();
 
-        if (!mQuestions.containsKey(nextQuestionNumber)) {
+        //if (mQuestions.containsKey(nextQuestionNumber)) {
+        if (!isQuestionFor(nextQuestionNumber)) {
             // Load next batch
             try {
                 loadQuestionBatch(nextQuestionNumber);
@@ -127,7 +142,8 @@ public class QuizGameActivity extends QuizActivity {
                 Log.e(DEBUG_TAG, "Loading updated question batch failed", e);
             }
         }
-        if (mQuestions.containsKey(nextQuestionNumber)) {
+        //if (mQuestions.containsKey(nextQuestionNumber)) {
+        if (isQuestionFor(nextQuestionNumber)) {
             // Update question text
             TextSwitcher questionTextSwitcher =
                     (TextSwitcher) findViewById(R.id.TextSwitcher_QuestionText);
@@ -144,11 +160,12 @@ public class QuizGameActivity extends QuizActivity {
 
     private void loadQuestionBatch(int startQuestionNumber) throws XmlPullParserException, IOException {
         // Remove old batch
-        mQuestions.clear();
+        //mQuestions.clear();
+        questionsList = new ArrayList<Question>();
         // TODO: Contact the server and retrieve a batch of question data, beginning at startQuestionNumber
         XmlResourceParser questionBatch;
         // BEGIN MOCK QUESTIONS
-        if (startQuestionNumber < 16) {
+        if (startQuestionNumber <= QUESTION_BATCH_SIZE) {
             questionBatch = getResources().getXml(R.xml.samplequestions);
         } else {
             questionBatch = getResources().getXml(R.xml.samplequestions2);
@@ -157,7 +174,7 @@ public class QuizGameActivity extends QuizActivity {
         // END MOCK QUESTIONS
         // Parse the XML
         int eventType = -1;
-        int x = 0;
+
         // Find Score records from XML
         while (eventType != XmlResourceParser.END_DOCUMENT) {
             if (eventType == XmlResourceParser.START_TAG) {
@@ -172,33 +189,41 @@ public class QuizGameActivity extends QuizActivity {
                     String questionImageUrl = questionBatch.getAttributeValue(null,
                             XML_TAG_QUESTION_ATTRIBUTE_IMAGEURL);
                     // Save data to our hashtable
-                    mQuestions.put(questionNum, new Question(questionNum, questionText,
-                            questionImageUrl));
-                    x++;
+                    //mQuestions.put(questionNum, new Question(questionNum, questionText,
+                    //        questionImageUrl));
+                    questionsList.add(new Question(questionNum, questionText, questionImageUrl));
                 }
             }
             eventType = questionBatch.next();
         }
-        Log.i(DEBUG_TAG, "Se han añadido "+x+" preguntas");
     }
 
     private String getQuestionText(Integer questionNumber) {
         String text = null;
-        Question curQuestion = mQuestions.get(questionNumber);
+        //Question curQuestion = mQuestions.get(questionNumber);
+        Question curQuestion = getSelectedQuestion(questionNumber);
         if (curQuestion != null) {
             text = curQuestion.mText;
         }
-        Log.i(DEBUG_TAG, "Se ha creado el texto");
         return text;
+    }
+
+    private Question getSelectedQuestion(Integer questionNumber) {
+        for (int i=0; i<questionsList.size(); i++){
+            if (questionsList.get(i).getNumber()==questionNumber){
+                return (questionsList.get(i));
+            }
+        }
+        return null;
     }
 
     private String getQuestionImageUrl(Integer questionNumber) {
         String url = null;
-        Question curQuestion = mQuestions.get(questionNumber);
+        //Question curQuestion = mQuestions.get(questionNumber);
+        Question curQuestion = getSelectedQuestion(questionNumber);
         if (curQuestion != null) {
             url = curQuestion.mImageUrl;
         }
-        Log.i(DEBUG_TAG, "Se ha rescatado la url");
         return url;
     }
 
@@ -214,7 +239,6 @@ public class QuizGameActivity extends QuizActivity {
             Log.e(DEBUG_TAG, "Decoding Bitmap stream failed");
             image = getResources().getDrawable(R.drawable.noquestion);
         }
-        Log.i(DEBUG_TAG, "Se ha cargado una imagen");
         return image;
     }
 	
@@ -267,6 +291,9 @@ public class QuizGameActivity extends QuizActivity {
             mNumber = questionNum;
             mText = questionText;
             mImageUrl = questionImageUrl;
+        }
+        public int getNumber(){
+            return mNumber;
         }
     }
 }
